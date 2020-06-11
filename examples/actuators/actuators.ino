@@ -3,17 +3,17 @@
 // Adding an Actuator
 // by Dhvanil Shah
 
-// Demostrates how add an actuator, in this case lights, with the Mycelium library
+// Demostrates how to add an actuator, in this case lights, with the Mycelium library
 
-// Created 1 April 2006
+// Created in 2020
 
 Mycelium mycel = Mycelium();
 
 void setup()
 {
     Serial.begin(115200);
-    mycel.connect("Home", "103yogicenter", -4);
-    String lightSchedule[] = {"08:00", "20:00"};
+    mycel.connect("SSID", "PASSWORD", -4);
+    vector<int> schedule = {100, 200, 2000, 2400};
     mycel.attachLights(nullptr, nullptr, lightSchedule);
 }
 

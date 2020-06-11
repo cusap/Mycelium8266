@@ -9,7 +9,7 @@ Mycelium::Mycelium()
 
 void Mycelium::run()
 {
-    Serial.println("Analyzing Actuatons");
+    Serial.println("Analyzing Actuators");
     for (auto actuatorit = actuators.begin(); actuatorit != actuators.end(); ++actuatorit)
     {
         Serial.print("Processing: ");
@@ -31,7 +31,20 @@ void Mycelium::run()
         if (toggleOn)
             (*actuatorit).on();
         else
-            (*actuatorit).off()
+            (*actuatorit).off();
+    }
+    Serial.println("Analyzing Sensors");
+    for (auto sensorit = sensors.begin(); sensorit != sensors.end(); ++sensorit)
+    {
+        Serial.print("Processing: ");
+        Serial.println((*sensorit).name);
+        float reading = (*sensorit).check();
+        Serial.print("Value: ");
+        Serial.print(reading);
+        Serial.print(" | Acceptable Range ");
+        Serial.print((*sensorit).low);
+        Serial.print(" to ");
+        Serial.println((*sensorit).high);
     }
     Serial.println("\n");
     return;

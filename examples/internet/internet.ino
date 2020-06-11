@@ -1,22 +1,22 @@
 #include <Mycelium8266.h>
 
-// Doing Something
-// by John Doe <http://www.yourwebsite.com>
+// Connecting to the Internet
+// by Dhvanil Shah
 
-// Demostrates how to do something with the Test library
+// Demostrates how to connect to the internet
 
-// Created 1 April 2006
+// Created in 2020
 
 Mycelium mycel = Mycelium();
 
 void setup()
 {
   Serial.begin(115200);
-  mycel.connect("Home", "103yogicenter", -4);
+  mycel.connect("SSID", "PASSWORD", -4);
 }
 
 void loop()
 {
-  mycel.getTime();
+  mycel.run();
   delay(500);
 }

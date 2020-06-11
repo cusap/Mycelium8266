@@ -24,10 +24,10 @@ typedef struct
 
 typedef struct
 {
-    int lowThres;
-    int highThresh;
-    int lastReading;
-    int (*check)();
+    float low;
+    float high;
+    float lastReading;
+    float (*check)();
     bool activeIssue;
     String name;
 } Sensor;
@@ -45,9 +45,9 @@ public:
     void attachLights(void (*on)(), void (*off)(), vector<int> schedule);
 
     // Sensors
-    void attachLiquidLevel(int (*check)(), int low, int high);
-    void attachAirTemperature(int (*check)(), int low, int high);
-    void attachAirHumidity(int (*check)(), int low, int high);
+    void attachLiquidLevel(float (*check)(), float low, float high);
+    void attachAirTemperature(float (*check)(), float low, float high);
+    void attachAirHumidity(float (*check)(), float low, float high);
 
     // Main Loop Function
     void run();

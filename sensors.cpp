@@ -6,33 +6,33 @@
 // include this library's description file
 #include "Mycelium8266.h"
 
-void Mycelium::attachLiquidLevel(int (*check)(), int low, int high)
+void Mycelium::attachLiquidLevel(float (*check)(), float low, float high)
 {
     Sensor liquidLevelSensor;
-    liquidLevelSensor.highThresh = high;
-    liquidLevelSensor.lowThres = low;
+    liquidLevelSensor.high = high;
+    liquidLevelSensor.low = low;
     liquidLevelSensor.check = check;
     liquidLevelSensor.name = "LiquidLevel";
 
     sensors.push_back(liquidLevelSensor);
 }
 
-void Mycelium::attachAirTemperature(int (*check)(), int low, int high)
+void Mycelium::attachAirTemperature(float (*check)(), float low, float high)
 {
     Sensor airTemp;
-    airTemp.highThresh = high;
-    airTemp.lowThres = low;
+    airTemp.high = high;
+    airTemp.low = low;
     airTemp.check = check;
     airTemp.name = "AirTemperature";
 
     sensors.push_back(airTemp);
 }
 
-void Mycelium::attachAirHumidity(int (*check)(), int low, int high)
+void Mycelium::attachAirHumidity(float (*check)(), float low, float high)
 {
     Sensor airHum;
-    airHum.highThresh = high;
-    airHum.lowThres = low;
+    airHum.high = high;
+    airHum.low = low;
     airHum.check = check;
     airHum.name = "AirHumidity";
 

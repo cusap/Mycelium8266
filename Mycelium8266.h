@@ -10,7 +10,11 @@
 #include "ESP8266WiFi.h"
 #include "time.h"
 #include "vector"
+#include <ArduinoJson.h>
 using namespace std;
+
+#define IOT_INTERVAL 5      // 5 Seconds
+#define SENSORS_SUPPORTED 3 // Number of Sensors Supported
 
 // STRUCT DEFS
 typedef struct
@@ -30,6 +34,7 @@ typedef struct
     float (*check)();
     bool activeIssue;
     String name;
+    String code;
 } Sensor;
 
 // library interface description
@@ -63,7 +68,10 @@ private:
     void verifySchedule(vector<int> schedule);
 
     // Sensors
+    long lastUpdate = 0;
+    long updateInterval = 5; //5 Seconds
     vector<Sensor> sensors;
+    void publishSensors();
 
     // Error
     void throwError(String error);

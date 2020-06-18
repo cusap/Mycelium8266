@@ -9,6 +9,7 @@
 
 // include this library's description file
 #include "Mycelium8266.h"
+#include <time.h>
 
 //  Connect to WIFI
 void Mycelium::connect(char *ssid, char *pwd, int timezone)
@@ -30,14 +31,14 @@ void Mycelium::connect(char *ssid, char *pwd, int timezone)
     Serial.print(".");
   }
   Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println("WiFi Connected");
 
   Serial.println("Connecting to Time Server");
   configTime(tz * 3600, 0, "pool.ntp.org", "time.nist.gov");
-  while (!time(nullptr))
+  Serial.println("Waiting on Time Sync...");
+  while (time(nullptr) < 1592326510) //timestamp last updated 06/16/2020
   {
-    delay(500);
-    Serial.print(".");
+    delay(10);
   }
   Serial.println("Connected to Time Server");
   return;

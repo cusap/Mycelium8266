@@ -12,7 +12,8 @@ void Mycelium::attachLiquidLevel(float (*check)(), float low, float high)
     liquidLevelSensor.high = high;
     liquidLevelSensor.low = low;
     liquidLevelSensor.check = check;
-    liquidLevelSensor.name = "LiquidLevel";
+    liquidLevelSensor.name = "Liquid Level";
+    liquidLevelSensor.code = "ll";
 
     sensors.push_back(liquidLevelSensor);
 }
@@ -23,7 +24,8 @@ void Mycelium::attachAirTemperature(float (*check)(), float low, float high)
     airTemp.high = high;
     airTemp.low = low;
     airTemp.check = check;
-    airTemp.name = "AirTemperature";
+    airTemp.name = "Air Temperature";
+    airTemp.code = "at";
 
     sensors.push_back(airTemp);
 }
@@ -34,7 +36,8 @@ void Mycelium::attachAirHumidity(float (*check)(), float low, float high)
     airHum.high = high;
     airHum.low = low;
     airHum.check = check;
-    airHum.name = "AirHumidity";
+    airHum.name = "Air Humidity";
+    airHum.code = "ah";
 
     sensors.push_back(airHum);
 }

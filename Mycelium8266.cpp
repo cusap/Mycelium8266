@@ -1,5 +1,6 @@
 // include this library's description file
 #include "Mycelium8266.h"
+#include <ArduinoJson.h>
 
 // Constructor
 Mycelium::Mycelium()
@@ -33,6 +34,7 @@ void Mycelium::run()
         else
             (*actuatorit).off();
     }
+
     Serial.println("Analyzing Sensors");
     for (auto sensorit = sensors.begin(); sensorit != sensors.end(); ++sensorit)
     {
@@ -40,13 +42,37 @@ void Mycelium::run()
         Serial.println((*sensorit).name);
         float reading = (*sensorit).check();
         Serial.print("Value: ");
-        Serial.print(reading);
-        Serial.print(" | Acceptable Range ");
-        Serial.print((*sensorit).low);
-        Serial.print(" to ");
-        Serial.println((*sensorit).high);
+        Serial.println(reading);
+        (*sensorit).lastReading = reading;
+        float min = (*sensorit).low;
+        float max = (*sensorit).high;
+        if ((min > reading) || (max < reading))
+            (*sensorit).activeIssue = true;
+        else
+            (*sensorit).activeIssue = false;
     }
+
+    long now = time(nullptr);
+    if (now - IOT_INTERVAL > lastUpdate)
+    {
+        lastUpdate = now;
+        publishSensors();
+    }
+
     Serial.println("\n");
+    return;
+}
+
+void Mycelium::publishSensors()
+{
+    const size_t capacity = SENSORS_SUPPORTED * JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(SENSORS_SUPPORTED);
+    StaticJsonDocument<capacity> doc;
+    for (auto sensorit = sensors.begin(); sensorit != sensors.end(); ++sensorit)
+    {
+        doc[(*sensorit).code]["val"] = (*sensorit).lastReading;
+        doc[(*sensorit).code]["iss"] = (*sensorit).activeIssue;
+    }
+    serializeJson(doc, Serial);
     return;
 }
 

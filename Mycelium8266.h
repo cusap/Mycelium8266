@@ -53,6 +53,7 @@ public:
     void attachLiquidLevel(float (*check)(), float low, float high);
     void attachAirTemperature(float (*check)(), float low, float high);
     void attachAirHumidity(float (*check)(), float low, float high);
+    String publishSensors();
 
     // Main Loop Function
     void run();
@@ -71,7 +72,6 @@ private:
     long lastUpdate = 0;
     long updateInterval = 5; //5 Seconds
     vector<Sensor> sensors;
-    void publishSensors();
 
     // Error
     void throwError(String error);

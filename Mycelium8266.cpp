@@ -1,6 +1,6 @@
 // include this library's description file
 #include "Mycelium8266.h"
-#include <ArduinoJson.h>
+// #include <ArduinoJson.h>
 
 // Constructor
 Mycelium::Mycelium()
@@ -63,7 +63,7 @@ void Mycelium::run()
     return;
 }
 
-void Mycelium::publishSensors()
+String Mycelium::publishSensors()
 {
     const size_t capacity = SENSORS_SUPPORTED * JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(SENSORS_SUPPORTED);
     StaticJsonDocument<capacity> doc;
@@ -72,8 +72,9 @@ void Mycelium::publishSensors()
         doc[(*sensorit).code]["val"] = (*sensorit).lastReading;
         doc[(*sensorit).code]["iss"] = (*sensorit).activeIssue;
     }
-    serializeJson(doc, Serial);
-    return;
+    String data;
+    serializeJson(doc, data);
+    return data;
 }
 
 void Mycelium::throwError(String error)

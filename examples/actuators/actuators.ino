@@ -12,7 +12,6 @@ Mycelium mycel = Mycelium();
 void setup()
 {
     Serial.begin(115200);
-    mycel.connect("SSID", "PASSWORD", -4);
     vector<int> schedule = {100, 200, 2000, 2400};
     mycel.attachLights(nullptr, nullptr, lightSchedule);
 }

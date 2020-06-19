@@ -2,6 +2,9 @@
 #include "Mycelium8266.h"
 // #include <ArduinoJson.h>
 
+void mqttLoop();
+bool publishTelemetry(String data);
+
 // Constructor
 Mycelium::Mycelium()
 {
@@ -51,15 +54,18 @@ void Mycelium::run()
         else
             (*sensorit).activeIssue = false;
     }
-
-    long now = time(nullptr);
-    if (now - IOT_INTERVAL > lastUpdate)
-    {
-        lastUpdate = now;
-        publishSensors();
-    }
-
     Serial.println("\n");
+
+    if (cloudConnected)
+    {
+        mqttLoop();
+        long now = time(nullptr);
+        if (now - IOT_INTERVAL > lastUpdate)
+        {
+            lastUpdate = now;
+            publishTelemetry(publishSensors());
+        }
+    }
     return;
 }
 

@@ -17,6 +17,7 @@
 // WIFI
 const char *ssid = "SSID";
 const char *password = "PWD";
+const int timezone = -4;
 
 // Cloud iot details.
 const char *project_id = "cusap-iot";

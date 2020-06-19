@@ -18,7 +18,6 @@ Mycelium mycel = Mycelium();
 void setup()
 {
     Serial.begin(115200);
-    mycel.connect("SSID", "PASSWORD", -4);
     pinMode(DHTPin, INPUT);
     dht.begin();
 

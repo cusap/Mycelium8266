@@ -13,7 +13,7 @@
 #include <ArduinoJson.h>
 using namespace std;
 
-#define IOT_INTERVAL 60 * 1 //  1 Minute
+#define IOT_INTERVAL 60 * 5 //  1 Minute
 #define SENSORS_SUPPORTED 3 // Number of Sensors Supported
 
 // STRUCT DEFS

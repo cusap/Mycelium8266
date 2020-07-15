@@ -8,12 +8,12 @@
 #define Mycelium8266_h
 
 #include "ESP8266WiFi.h"
-#include "time.h"
+#include <time.h>
 #include "vector"
 #include <ArduinoJson.h>
 using namespace std;
 
-#define IOT_INTERVAL 5      // 5 Seconds
+#define IOT_INTERVAL 60 * 5 //  1 Minute
 #define SENSORS_SUPPORTED 3 // Number of Sensors Supported
 
 // STRUCT DEFS
@@ -43,7 +43,7 @@ class Mycelium
     // user-accessible "public" interface
 public:
     Mycelium();
-    void connect(char *ssid, char *pwd, int timezone);
+    void connect();
     int getTime();
 
     // Actuators
@@ -60,9 +60,8 @@ public:
 
     // library-accessible "private" interface
 private:
-    char *ssid;
-    char *pwd;
-    int tz; //timezone
+    // Cloud IoT
+    bool cloudConnected = false;
 
     // Actuators
     vector<Actuator> actuators;

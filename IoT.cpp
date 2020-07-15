@@ -11,36 +11,14 @@
 #include "Mycelium8266.h"
 #include <time.h>
 
+void setupCloudIoT();
+void connect();
+
 //  Connect to WIFI
-void Mycelium::connect(char *ssid, char *pwd, int timezone)
+void Mycelium::connect()
 {
-  ssid = ssid;
-  pwd = pwd;
-  tz = timezone;
-
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, pwd);
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi Connected");
-
-  Serial.println("Connecting to Time Server");
-  configTime(tz * 3600, 0, "pool.ntp.org", "time.nist.gov");
-  Serial.println("Waiting on Time Sync...");
-  while (time(nullptr) < 1592326510) //timestamp last updated 06/16/2020
-  {
-    delay(10);
-  }
-  Serial.println("Connected to Time Server");
+  setupCloudIoT();
+  cloudConnected = true;
   return;
 }
 
@@ -53,3 +31,30 @@ int Mycelium::getTime()
   int hour = timeinfo->tm_hour, min = timeinfo->tm_min;
   return hour * 100 + min;
 }
+
+// void Mycelium::setupCert()
+// {
+//   // Set CA cert on wifi client
+//   // If using a static (pem) cert, uncomment in ciotc_config.h:
+//   certList.append(primary_ca);
+//   certList.append(backup_ca);
+//   netClient->setTrustAnchors(&certList);
+//   return;
+// }
+
+// void Mycelium::setupCloudIoT()
+// {
+//   // Create the device
+//   device = new CloudIoTCoreDevice(
+//       project_id, location, registry_id, device_id,
+//       private_key_str);
+//   // ESP8266 WiFi setup
+//   netClient = new WiFiClientSecure();
+//   // ESP8266 WiFi secure initialization
+//   setupCert();
+//   mqttClient = new MQTTClient(512);
+//   mqttClient->setOptions(180, true, 1000); // keepAlive, cleanSession, timeout
+//   mqtt = new CloudIoTCoreMqtt(mqttClient, netClient, device);
+//   mqtt->setUseLts(true);
+//   mqtt->startMQTT(); // Opens connection
+// }

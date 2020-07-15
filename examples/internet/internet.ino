@@ -1,5 +1,5 @@
 #include <Mycelium8266.h>
-
+#include "esp8266_mqtt.h"
 // Connecting to the Internet
 // by Dhvanil Shah
 
@@ -12,7 +12,7 @@ Mycelium mycel = Mycelium();
 void setup()
 {
   Serial.begin(115200);
-  mycel.connect("SSID", "PASSWORD", -4);
+  mycel.connect();
 }
 
 void loop()

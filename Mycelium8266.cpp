@@ -11,8 +11,17 @@ Mycelium::Mycelium()
     return;
 }
 
+void Mycelium::attachIndicator(void (*on)(), void (*warn)(), void (*error)())
+{
+    indicatorAttached = true;
+    indicOk = on;
+    indicWarn = warn;
+    indicError = error;
+}
+
 void Mycelium::run()
 {
+    bool sensorError = false, sensorWarn = false;
     Serial.println("Analyzing Actuators");
     for (auto actuatorit = actuators.begin(); actuatorit != actuators.end(); ++actuatorit)
     {
@@ -49,12 +58,29 @@ void Mycelium::run()
         (*sensorit).lastReading = reading;
         float min = (*sensorit).low;
         float max = (*sensorit).high;
+        if (isnan(reading))
+        {
+            sensorWarn = true;
+        }
         if ((min > reading) || (max < reading))
+        {
+            sensorError = true;
             (*sensorit).activeIssue = true;
+        }
         else
             (*sensorit).activeIssue = false;
     }
     Serial.println("\n");
+
+    if (indicatorAttached)
+    {
+        if (sensorWarn)
+            indicWarn();
+        else if (sensorError)
+            indicError();
+        else
+            indicOk();
+    }
 
     if (cloudConnected)
     {

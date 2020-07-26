@@ -41,3 +41,15 @@ void Mycelium::attachAirHumidity(float (*check)(), float low, float high)
 
     sensors.push_back(airHum);
 }
+
+void Mycelium::attachCO2(float (*check)(), float low, float high)
+{
+    Sensor CO2;
+    CO2.high = high;
+    CO2.low = low;
+    CO2.check = check;
+    CO2.name = "CO2 Level";
+    CO2.code = "cb";
+
+    sensors.push_back(CO2);
+}

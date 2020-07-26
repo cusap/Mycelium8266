@@ -13,8 +13,8 @@
 #include <ArduinoJson.h>
 using namespace std;
 
-#define IOT_INTERVAL 60 * 5 //  1 Minute
-#define SENSORS_SUPPORTED 3 // Number of Sensors Supported
+#define IOT_INTERVAL 60 * 1 //  1 Minute
+#define SENSORS_SUPPORTED 4 // Number of Sensors Supported
 
 // STRUCT DEFS
 typedef struct
@@ -46,6 +46,9 @@ public:
     void connect();
     int getTime();
 
+    // Status Indicator Light
+    void attachIndicator(void (*on)(), void (*warn)(), void (*error)());
+
     // Actuators
     void attachLights(void (*on)(), void (*off)(), vector<int> schedule);
 
@@ -53,6 +56,7 @@ public:
     void attachLiquidLevel(float (*check)(), float low, float high);
     void attachAirTemperature(float (*check)(), float low, float high);
     void attachAirHumidity(float (*check)(), float low, float high);
+    void attachCO2(float (*check)(), float low, float high);
     String publishSensors();
 
     // Main Loop Function
@@ -62,6 +66,10 @@ public:
 private:
     // Cloud IoT
     bool cloudConnected = false;
+
+    // Status Indicator Light
+    bool indicatorAttached = false;
+    void (*indicOk)(), (*indicWarn)(), (*indicError)();
 
     // Actuators
     vector<Actuator> actuators;
